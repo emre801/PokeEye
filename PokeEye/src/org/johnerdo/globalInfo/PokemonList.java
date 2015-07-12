@@ -2,7 +2,9 @@ package org.johnerdo.globalInfo;
 
 import java.util.HashMap;
 
-import com.pokejava.Pokemon;
+import com.johnerdo.pokemonInfo.Pokemon;
+
+
 
 
 public class PokemonList {

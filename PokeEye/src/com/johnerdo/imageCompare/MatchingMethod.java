@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.text.DecimalFormat;
 import java.util.HashMap;
@@ -23,95 +25,96 @@ import org.opencv.highgui.Highgui;
 import org.opencv.imgproc.Imgproc;
 
 public class MatchingMethod {
-	
+
 	public static String screenInfoScreenShot = "C:/Users/John/Desktop/ScreenInfo/ScreenShot";
 	public static String screenInfoScreen = "C:/Users/John/Desktop/ScreenInfo/";
 	public static String resultInfo = "C:/Users/John/Desktop/ScreenInfo/Results/";
-	public static String pokemonInfo ="C:/Users/John/Desktop/PokemonInfo/";
+	public static String pokemonInfo = "C:/Users/John/Desktop/PokemonInfo/";
 
-	public static void setupScreenInfoScreenShot(){
-		
+	public static HashMap<String, Integer> pokeHash = new HashMap<String, Integer>();
+
+	public static void setupScreenInfoScreenShot() {
+
 	}
-	
-	public static LinkedList<Double> getHealthBars(){
+
+	public static LinkedList<Double> getHealthBars() {
 		LinkedList<Double> result = new LinkedList<Double>();
-		System.out.println(screenInfoScreenShot +"/00002.png");
-		Mat health1 = screenRegion(screenInfoScreenShot +"/00002.png",screenInfoScreen + "h1.png",new Rect(75,220,50,6));
-		Mat health2 = screenRegion(screenInfoScreenShot +"/00002.png",screenInfoScreen + "h2.png",new Rect(330,18,50,6));
+		System.out.println(screenInfoScreenShot + "/00002.png");
+		Mat health1 = screenRegion(screenInfoScreenShot + "/00002.png",
+				screenInfoScreen + "h1.png", new Rect(75, 220, 50, 6));
+		Mat health2 = screenRegion(screenInfoScreenShot + "/00002.png",
+				screenInfoScreen + "h2.png", new Rect(330, 18, 50, 6));
 		result.add(getHealthPercent(health1) * 100);
 		result.add(getHealthPercent(health2) * 100);
 		return result;
 	}
-	
-	public static double getHealthPercent(Mat health1){
-		int p1Health =0;
-		for(int i = 48;i>0;i--){
+
+	public static double getHealthPercent(Mat health1) {
+		int p1Health = 0;
+		for (int i = 48; i > 0; i--) {
 			double[] pix = health1.get(1, i);
-			if(pix[0] == pix[1] && pix[0] == pix[2])
+			if (pix[0] == pix[1] && pix[0] == pix[2])
 				p1Health++;
 		}
-		double health = 1d - p1Health/48d;
+		double health = 1d - p1Health / 48d;
 		DecimalFormat twoDForm = new DecimalFormat("#.##");
 		return Double.valueOf(twoDForm.format(health));
 	}
-	
+
 	public static Mat screenRegion(String screenshot, String output, Rect rect) {
 		Mat screen = Highgui.imread(screenshot);
 		Mat slot1 = screen.submat(rect);
-		//System.out.println(slot1.dump());
+		// System.out.println(slot1.dump());
 		Highgui.imwrite(output, slot1);
 		return slot1;
 	}
-	public static void removeGreen(Mat mat){
-		double[] green = {94, 229, 158};
-		for(int i = 0;i <mat.rows();i++){
-			for(int j =0;j < mat.cols();j++){
+
+	public static void removeGreen(Mat mat) {
+		double[] green = { 94, 229, 158 };
+		for (int i = 0; i < mat.rows(); i++) {
+			for (int j = 0; j < mat.cols(); j++) {
 				double[] color = mat.get(j, i);
-				if(color[0] == green[0] && color[1] == green[1] && color[2] == green[2]){
-					
+				if (color[0] == green[0] && color[1] == green[1]
+						&& color[2] == green[2]) {
+
 				}
 			}
 		}
 	}
-	public static String getLatestScreenShot(){
+
+	public static String getLatestScreenShot() {
 		File folder = new File(screenInfoScreenShot);
 		long newest = Integer.MIN_VALUE;
 		File newestFile = null;
-		for(File file:folder.listFiles()){
-			if(file.lastModified() > newest){
+		for (File file : folder.listFiles()) {
+			if (file.lastModified() > newest) {
 				newest = file.lastModified();
 				newestFile = file;
 			}
 		}
 		return newestFile.getAbsolutePath();
-		
+
 	}
-	
+
 	public static LinkedList<Mat> getScreenInfo() {
 		LinkedList<Mat> results = new LinkedList<Mat>();
 		int x = 5;
 		int y = 5;
 		int box = 25, box2 = 20;
 		Rect rect1 = new Rect(140 + x, 40 + y, box, box2);
-		//String screenShot = screenInfoScreenShot +"Screenshot.png";
+		// String screenShot = screenInfoScreenShot +"Screenshot.png";
 		String screenShot = getLatestScreenShot();
-		results.add(screenRegion(screenShot,
-				resultInfo +"/slot1.png", rect1));
+		results.add(screenRegion(screenShot, resultInfo + "/slot1.png", rect1));
 		Rect rect2 = new Rect(210 + x, 40 + y, box, box2);
-		results.add(screenRegion(screenShot,
-				resultInfo +"/slot2.png", rect2));
+		results.add(screenRegion(screenShot, resultInfo + "/slot2.png", rect2));
 		Rect rect3 = new Rect(140 + x, 100 + y, box, box2);
-		results.add(screenRegion(screenShot,
-				resultInfo +"/slot3.png", rect3));
+		results.add(screenRegion(screenShot, resultInfo + "/slot3.png", rect3));
 		Rect rect4 = new Rect(210 + x, 100 + y, box, box2);
-		results.add(screenRegion(screenShot,
-				resultInfo +"/slot4.png", rect4));
+		results.add(screenRegion(screenShot, resultInfo + "/slot4.png", rect4));
 		Rect rect5 = new Rect(140 + x, 160 + y, box, box2);
-		results.add(screenRegion(screenShot,
-				resultInfo +"/slot5.png", rect5));
+		results.add(screenRegion(screenShot, resultInfo + "/slot5.png", rect5));
 		Rect rect6 = new Rect(210 + x, 160 + y, box, box2);
-		results.add(screenRegion(screenShot,
-				resultInfo +"/slot6.png", rect6));
+		results.add(screenRegion(screenShot, resultInfo + "/slot6.png", rect6));
 
 		return results;
 	}
@@ -127,13 +130,12 @@ public class MatchingMethod {
 				// if(j ==27 && i<=3 && count < 719)
 				// continue;
 				System.out.println("--");
-				Mat pok = screenRegion(
-						pokemonInfo +"/PokemonSprites.png",
-						pokemonInfo +"/Pokemon/pok" + count
-								+ ".png", rect);
-				//pok.dump();
+				Mat pok = screenRegion(pokemonInfo + "/PokemonSprites.png",
+						pokemonInfo + "/Pokemon/pok" + count + ".png", rect);
+				// pok.dump();
 				pokemonMats.add(pok);
-				//Highgui.imwrite(pokemonInfo + "/Pokemon/pok"+count+".png", pok);
+				// Highgui.imwrite(pokemonInfo + "/Pokemon/pok"+count+".png",
+				// pok);
 				count++;
 			}
 		}
@@ -195,8 +197,7 @@ public class MatchingMethod {
 		LinkedList<Mat> pokemons = getScreenInfo();
 		HashMap<Rect, Integer> squares = getImageRect();
 		LinkedList<String> pokemonName = new LinkedList<String>();
-		Mat img = Highgui
-				.imread(pokemonInfo +"/PokemonSprites.png");
+		Mat img = Highgui.imread(pokemonInfo + "/PokemonSprites.png");
 		// int count = 1;
 		for (Mat ok : pokemons) {
 			// revenge(img, ok,pokemonInfo +"/Testing" +
@@ -208,6 +209,7 @@ public class MatchingMethod {
 					// squares.get(rect));
 					String pokemon = PokemonList.pokemonNames[squares.get(rect) - 1];
 					pokemonName.add(pokemon);
+
 					// System.out.println("Name  = " +
 					// PokemonList.pokemonNames[squares.get(rect) -1]);
 				}
@@ -218,25 +220,32 @@ public class MatchingMethod {
 	}
 
 	public static LinkedList<Integer> getPokemonNumbersOnScreen() {
+		//deserializeHash();
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		LinkedList<Mat> pokemons = getScreenInfo();
 		System.out.println("Pokemon Info " + pokemons.size());
 		HashMap<Rect, Integer> squares = getImageRect();
 		LinkedList<Integer> pokemonName = new LinkedList<Integer>();
-		System.out.println(pokemonInfo +"/PokemonSprites.png");
-		Mat img = Highgui
-				.imread(pokemonInfo +"/PokemonSprites.png");
+		System.out.println(pokemonInfo + "/PokemonSprites.png");
+		Mat img = Highgui.imread(pokemonInfo + "/PokemonSprites.png");
 		// int count = 1;
 		for (Mat ok : pokemons) {
 			// revenge(img, ok,pokemonInfo +"/Testing" +
 			// count + ".png",Imgproc.TM_SQDIFF);
+
+			if (pokeHash.containsKey(ok.toString())) {
+				pokemonName.add(pokeHash.get(ok.toString()));
+				System.out.println("ShortCut");
+				continue;
+			}
 			Point midPoint = findMidPoint(img, ok, Imgproc.TM_SQDIFF);
 			for (Rect rect : squares.keySet()) {
 				if (rect.contains(midPoint)) {
 					// System.out.println("PokemonNumber = " +
 					// squares.get(rect));
 					Integer pokemon = squares.get(rect);
-					System.out.println(pokemon);
+					System.out.println(pokemon + " LALALA");
+					pokeHash.put(ok.toString(), pokemon);
 					pokemonName.add(pokemon);
 					// System.out.println("Name  = " +
 					// PokemonList.pokemonNames[squares.get(rect) -1]);
@@ -244,6 +253,7 @@ public class MatchingMethod {
 			}
 			// count++;
 		}
+		//serializeHash();
 		return pokemonName;
 	}
 
@@ -260,17 +270,13 @@ public class MatchingMethod {
 				numZeros = "00";
 			numZeros = numZeros + i;
 			System.out.println("---" + numZeros);
-			File source = new File(
-					pokemonInfo +"/Sprires/xy-animated/"
-							+ numZeros + ".gif");
-			File target = new File(
-					pokemonInfo +"/Sprires/Current/"
-							+ count + ".gif");
-			File source2 = new File(pokemonInfo +"/Pokemon/pok" + i
-					+ ".png");
-			File target2 = new File(
-					pokemonInfo +"/Sprires/CurrentGreen/"
-							+ count + ".png");
+			File source = new File(pokemonInfo + "/Sprires/xy-animated/"
+					+ numZeros + ".gif");
+			File target = new File(pokemonInfo + "/Sprires/Current/" + count
+					+ ".gif");
+			File source2 = new File(pokemonInfo + "/Pokemon/pok" + i + ".png");
+			File target2 = new File(pokemonInfo + "/Sprires/CurrentGreen/"
+					+ count + ".png");
 			count++;
 			try {
 				copyFileUsingFileStreams(source, target);
@@ -281,7 +287,7 @@ public class MatchingMethod {
 			}
 		}
 	}
-	
+
 	public static void copyGifsName(LinkedList<Integer> names) {
 		int count = 0;
 		for (Integer i : names) {
@@ -292,17 +298,13 @@ public class MatchingMethod {
 			if (i < 10)
 				numZeros = "00";
 			numZeros = numZeros + i;
-			File source = new File(
-					pokemonInfo +"/Sprires/xy-animated/"
-							+ numZeros + ".gif");
-			File target = new File(
-					pokemonInfo +"/Sprires/Current/"
-							+ count + ".gif");
-			File source2 = new File(pokemonInfo +"/Pokemon/pok" + i
-					+ ".png");
-			File target2 = new File(
-					pokemonInfo +"/Sprires/CurrentGreen/"
-							+ count + ".png");
+			File source = new File(pokemonInfo + "/Sprires/xy-animated/"
+					+ numZeros + ".gif");
+			File target = new File(pokemonInfo + "/Sprires/Current/" + count
+					+ ".gif");
+			File source2 = new File(pokemonInfo + "/Pokemon/pok" + i + ".png");
+			File target2 = new File(pokemonInfo + "/Sprires/CurrentGreen/"
+					+ count + ".png");
 			count++;
 			try {
 				copyFileUsingFileStreams(source, target);
@@ -411,20 +413,51 @@ public class MatchingMethod {
 		}
 	}
 
+	public static void serializeHash() {
+		try {
+			FileOutputStream fileOut = new FileOutputStream("PokeHash.txt");
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(pokeHash);
+			out.close();
+			fileOut.close();
+			System.out.println(pokeHash.size());
+			System.out.println("Serialized data is saved in PokeHash.txt");
+		} catch (IOException i) {
+			i.printStackTrace();
+		}
+	}
+
+	public static void deserializeHash() {
+		try {
+			FileInputStream fileIn = new FileInputStream("PokeHash.txt");
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			pokeHash = (HashMap<String, Integer>) in.readObject();
+			in.close();
+			fileIn.close();
+		} catch (IOException i) {
+			i.printStackTrace();
+			return;
+		} catch (ClassNotFoundException c) {
+			System.out.println("Employee class not found");
+			c.printStackTrace();
+			return;
+		}
+	}
+
+	
+	
+	
+	
 	public static void main(String[] args) {
 		/*
+		 * System.loadLibrary(Core.NATIVE_LIBRARY_NAME); LinkedList<String>
+		 * pokemonNames = getPokemonNamesOnScreen(); int count = 0; for (String
+		 * name : pokemonNames) { System.out.print(name + "\t\t"); count++; if
+		 * (count % 2 == 0) System.out.println("\n"); }
+		 */
+		// System.out.println(getLatestScreenShot());
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-		LinkedList<String> pokemonNames = getPokemonNamesOnScreen();
-		int count = 0;
-		for (String name : pokemonNames) {
-			System.out.print(name + "\t\t");
-			count++;
-			if (count % 2 == 0)
-				System.out.println("\n");
-		}*/
-		//System.out.println(getLatestScreenShot());
-		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-		//getHealthBars();
+		// getHealthBars();
 		getImages();
 	}
 }
