@@ -63,6 +63,7 @@ public class MatchingMethod {
 
 	public static Mat screenRegion(String screenshot, String output, Rect rect) {
 		Mat screen = Highgui.imread(screenshot);
+		Imgproc.cvtColor(screen, screen, Imgproc.COLOR_BGR2GRAY);
 		Mat slot1 = screen.submat(rect);
 		// System.out.println(slot1.dump());
 		Highgui.imwrite(output, slot1);
@@ -198,6 +199,7 @@ public class MatchingMethod {
 		HashMap<Rect, Integer> squares = getImageRect();
 		LinkedList<String> pokemonName = new LinkedList<String>();
 		Mat img = Highgui.imread(pokemonInfo + "/PokemonSprites.png");
+		Imgproc.cvtColor(img, img, Imgproc.COLOR_BGR2GRAY);
 		// int count = 1;
 		for (Mat ok : pokemons) {
 			// revenge(img, ok,pokemonInfo +"/Testing" +
@@ -228,6 +230,7 @@ public class MatchingMethod {
 		LinkedList<Integer> pokemonName = new LinkedList<Integer>();
 		System.out.println(pokemonInfo + "/PokemonSprites.png");
 		Mat img = Highgui.imread(pokemonInfo + "/PokemonSprites.png");
+		Imgproc.cvtColor(img, img, Imgproc.COLOR_BGR2GRAY);
 		// int count = 1;
 		for (Mat ok : pokemons) {
 			// revenge(img, ok,pokemonInfo +"/Testing" +
