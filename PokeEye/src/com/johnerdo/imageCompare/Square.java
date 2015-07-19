@@ -1,10 +1,10 @@
 package com.johnerdo.imageCompare;
 
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.omg.CORBA.Environment;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -92,7 +92,7 @@ public class Square {
 		Mat result = warp(sourceImage, startM, 5);
 		//result = warp(result,result,1);
 		// Imgproc.cvtColor(result, result, Imgproc.COLOR_BGR2GRAY);
-		Highgui.imwrite(MatchingMethod.screenInfoScreen + "Test1.png", result);
+		Highgui.imwrite(output, result);
 		System.out.println("Done");
 		// return result;
 	}
@@ -186,7 +186,7 @@ public class Square {
 		// Imgproc.warpPerspective(original_image, imgSource,
 		// perspectiveTransform, new Size(300,300));
 
-		Highgui.imwrite(MatchingMethod.screenInfoScreen + "Test1.png",
+		Highgui.imwrite(output,
 				original_image);
 
 		// create the new image here using the largest detected square
@@ -228,15 +228,20 @@ public class Square {
 		return outputMat;
 	}
 	
-
+	public static String input = MatchingMethod.screenInfoScreen + "Test.png";
+	public static String output = MatchingMethod.screenInfoScreen + "/ScreenShot/Test1.png";
+	
 	public static void main(String[] args) {
+		
+		
+		loadSquareStuffBwahaha();
+	}
+	
+	public static void loadSquareStuffBwahaha(){
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-		System.out.println(MatchingMethod.screenInfoScreen + "Test.png");
-		Mat src = Highgui.imread(MatchingMethod.screenInfoScreen + "Test.png");
+		System.out.println(input);
+		Mat src = Highgui.imread(input);
 		getSquare(src);
-		// findLargestRectangle(src);
-		// getSquare(Highgui.imread(MatchingMethod.screenInfoScreen+
-		// "Test.png"));
 	}
 
 }

@@ -260,7 +260,7 @@ public class MatchingMethod {
 		return pokemonName;
 	}
 
-	public static String copyLocation = "-Mine";
+	public static String copyLocation = "";
 	public static void copyGifs(LinkedList<String> names) {
 		int count = 0;
 		for (String name : names) {

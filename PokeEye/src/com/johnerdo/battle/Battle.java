@@ -5,10 +5,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 
 import org.johnerdo.globalInfo.PokemonList;
 
@@ -27,13 +27,13 @@ public class Battle {
 		PokemonList.setMapping();
 		deserializeHash();
 	}
-	public void getPokemonOnScreen(boolean pushButton) throws InterruptedException{
+	public ArrayList<Pokemon> getPokemonOnScreen(boolean pushButton) throws InterruptedException{
 		if(pushButton){
 			RobotBot.Screen();
 			Thread.sleep(1500);
 		}
 		setUp();
-		printPokemon();
+		return printPokemon();
 	}
 
 	public static void getHealth(boolean pushButton) throws InterruptedException{
@@ -73,13 +73,16 @@ public class Battle {
 		MatchingMethod.copyGifsName(pokemonNums);
 	}
 	
-	public void printPokemon(){
+	public ArrayList<Pokemon> printPokemon(){
 		Iterator<Pokemon> pokIter = pokemon.iterator();
+		ArrayList<Pokemon> pokemonList = new ArrayList<Pokemon>();
 		while(pokIter.hasNext()){
 			Pokemon pok1 = pokIter.next();
+			pokemonList.add(pok1);
 			//Pokemon pok2 = pokIter.next();
 			System.out.println(PokemonList.printPokemonInfo(pok1));
 		}
+		return pokemonList;
 	}
 	public static void main(String[] args) throws InterruptedException{
 		Battle b = new Battle();
