@@ -735,7 +735,7 @@ public class PokemonList {
 		 "rotom-heat",//724
 		 "rotom-wash",//725
 		 "rotom-mow",//726
-		 "thundurus-therian",
+		 "rotom-wash",
 		 "landorus-therian",//727
 		 "tornadus-therian",//728
 		 "kyurem-black",//729

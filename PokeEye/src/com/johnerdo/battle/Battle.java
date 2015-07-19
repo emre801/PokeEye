@@ -8,6 +8,7 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.johnerdo.globalInfo.PokemonList;
 
@@ -34,6 +35,7 @@ public class Battle {
 		setUp();
 		printPokemon();
 	}
+
 	public static void getHealth(boolean pushButton) throws InterruptedException{
 		if(pushButton){
 			RobotBot.Screen();
@@ -46,6 +48,10 @@ public class Battle {
 	}
 	public void setUp(){
 		LinkedList<Integer> pokemonNums = MatchingMethod.getPokemonNumbersOnScreen();
+		movePokemonFromList(pokemonNums);
+	}
+	
+	public void movePokemonFromList(LinkedList<Integer> pokemonNums){
 		for(Integer dexNum :pokemonNums){
 			if(pokeHash.containsKey(dexNum)){
 				pokemon.add(pokeHash.get(dexNum));
@@ -66,6 +72,7 @@ public class Battle {
 		serializeHash();
 		MatchingMethod.copyGifsName(pokemonNums);
 	}
+	
 	public void printPokemon(){
 		Iterator<Pokemon> pokIter = pokemon.iterator();
 		while(pokIter.hasNext()){
@@ -77,6 +84,18 @@ public class Battle {
 	public static void main(String[] args) throws InterruptedException{
 		Battle b = new Battle();
 		b.getPokemonOnScreen(false);
+		//pokeListBwahah(b);
+
+	}
+	
+	public static void pokeListBwahah(Battle b){
+		MatchingMethod.copyLocation= "-Mine";
+		int[] nums = {1,2,3,4,5,6};
+		LinkedList<Integer> pokemonNums = new LinkedList<Integer>();
+		for(int i =0;i<nums.length;i++)
+			pokemonNums.add(nums[i]);
+		b.movePokemonFromList(pokemonNums);
+		b.printPokemon();
 	}
 	
 	public static void serializeHash() {

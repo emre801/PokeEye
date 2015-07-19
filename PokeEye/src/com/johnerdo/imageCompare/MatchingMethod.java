@@ -127,7 +127,7 @@ public class MatchingMethod {
 			for (int i = -1; i < 25; i++) {
 				int x = 47 + (i * 38);
 				int y = 94 + (j * 38);
-				Rect rect = new Rect(x, y, 32, 32);
+				Rect rect = new Rect(x, y, 36, 36);
 				// if(j ==27 && i<=3 && count < 719)
 				// continue;
 				System.out.println("--");
@@ -204,7 +204,7 @@ public class MatchingMethod {
 		for (Mat ok : pokemons) {
 			// revenge(img, ok,pokemonInfo +"/Testing" +
 			// count + ".png",Imgproc.TM_SQDIFF);
-			Point midPoint = findMidPoint(img, ok, Imgproc.TM_SQDIFF);
+			Point midPoint = findMidPoint(img, ok, Imgproc.TM_SQDIFF_NORMED);
 			for (Rect rect : squares.keySet()) {
 				if (rect.contains(midPoint)) {
 					// System.out.println("PokemonNumber = " +
@@ -260,6 +260,7 @@ public class MatchingMethod {
 		return pokemonName;
 	}
 
+	public static String copyLocation = "-Mine";
 	public static void copyGifs(LinkedList<String> names) {
 		int count = 0;
 		for (String name : names) {
@@ -275,10 +276,10 @@ public class MatchingMethod {
 			System.out.println("---" + numZeros);
 			File source = new File(pokemonInfo + "/Sprires/xy-animated/"
 					+ numZeros + ".gif");
-			File target = new File(pokemonInfo + "/Sprires/Current/" + count
+			File target = new File(pokemonInfo + "/Sprires/Current"+copyLocation+"/" + count
 					+ ".gif");
 			File source2 = new File(pokemonInfo + "/Pokemon/pok" + i + ".png");
-			File target2 = new File(pokemonInfo + "/Sprires/CurrentGreen/"
+			File target2 = new File(pokemonInfo + "/Sprires/CurrentGreen"+copyLocation+"/"
 					+ count + ".png");
 			count++;
 			try {
@@ -303,10 +304,10 @@ public class MatchingMethod {
 			numZeros = numZeros + i;
 			File source = new File(pokemonInfo + "/Sprires/xy-animated/"
 					+ numZeros + ".gif");
-			File target = new File(pokemonInfo + "/Sprires/Current/" + count
+			File target = new File(pokemonInfo + "/Sprires/Current"+copyLocation+"/" + count
 					+ ".gif");
 			File source2 = new File(pokemonInfo + "/Pokemon/pok" + i + ".png");
-			File target2 = new File(pokemonInfo + "/Sprires/CurrentGreen/"
+			File target2 = new File(pokemonInfo + "/Sprires/CurrentGreen"+copyLocation+"/"
 					+ count + ".png");
 			count++;
 			try {
