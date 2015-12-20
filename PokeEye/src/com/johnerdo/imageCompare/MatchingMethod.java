@@ -27,6 +27,7 @@ import org.opencv.imgproc.Imgproc;
 public class MatchingMethod {
 
 	public static String screenInfoScreenShot = "C:/Users/John/Desktop/PokemonInfo/ScreenShot";
+	public static String cameraScreenShot = "C:/Users/John/Desktop/PokemonInfo/Camera";
 	public static String screenInfoScreen = "C:/Users/John/Desktop/PokemonInfo/";
 	public static String resultInfo = "C:/Users/John/Desktop/PokemonInfo/Results/";
 	public static String pokemonInfo = "C:/Users/John/Desktop/PokemonInfo/";
@@ -83,8 +84,8 @@ public class MatchingMethod {
 		}
 	}
 
-	public static String getLatestScreenShot() {
-		File folder = new File(screenInfoScreenShot);
+	public static String getLatestScreenShot(String fileName) {
+		File folder = new File(fileName);
 		long newest = Integer.MIN_VALUE;
 		File newestFile = null;
 		for (File file : folder.listFiles()) {
@@ -104,7 +105,7 @@ public class MatchingMethod {
 		int box = 25, box2 = 20;
 		Rect rect1 = new Rect(140 + x, 40 + y, box, box2);
 		// String screenShot = screenInfoScreenShot +"Screenshot.png";
-		String screenShot = getLatestScreenShot();
+		String screenShot = getLatestScreenShot(screenInfoScreenShot);
 		results.add(screenRegion(screenShot, resultInfo + "/slot1.png", rect1));
 		Rect rect2 = new Rect(210 + x, 40 + y, box, box2);
 		results.add(screenRegion(screenShot, resultInfo + "/slot2.png", rect2));

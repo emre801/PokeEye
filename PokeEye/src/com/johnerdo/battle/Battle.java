@@ -15,6 +15,7 @@ import org.johnerdo.globalInfo.PokemonList;
 
 import com.johnerdo.imageCompare.MatchingMethod;
 import com.johnerdo.imageCompare.RobotBot;
+import com.johnerdo.imageDetection.ImageDetection;
 import com.johnerdo.pokemonInfo.Pokemon;
 import com.johnerdo.pokemonInfo.PokemonMethod;
 
@@ -24,6 +25,7 @@ public class Battle {
 	//LinkedList<String> pokemonOnScreen;
 	LinkedList<Pokemon> pokemon;
 	public static HashMap<Integer,Pokemon> pokeHash = new HashMap<Integer,Pokemon>();
+	public static boolean useCamera = true;
 	public Battle(){
 		this.pokemon = new LinkedList<Pokemon>();
 		PokemonList.setMapping();
@@ -101,6 +103,8 @@ public class Battle {
 	}
 	public static void main(String[] args) throws InterruptedException{
 		Battle b = new Battle();
+		if(useCamera)
+			ImageDetection.useCameraDetection();
 		b.getPokemonOnScreen(true);
 		//pokeListBwahah(b);
 
