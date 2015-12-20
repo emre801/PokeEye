@@ -85,7 +85,7 @@ public class Square {
 		// Core.circle(imgSource,p4,100,new Scalar(0,0,255));
 		List<Point> source = getCorners(p1,p2,p3,p4);
 		for(Point p: source){
-			System.out.println(p);
+			//System.out.println(p);
 		}
 		Mat startM = Converters.vector_Point2f_to_Mat(source);
 		//Imgproc.cvtColor(sourceImage, sourceImage, Imgproc.COLOR_BGR2GRAY);
@@ -93,7 +93,7 @@ public class Square {
 		//result = warp(result,result,1);
 		// Imgproc.cvtColor(result, result, Imgproc.COLOR_BGR2GRAY);
 		Highgui.imwrite(output, result);
-		System.out.println("Done");
+		//System.out.println("Done");
 		// return result;
 	}
 
@@ -239,7 +239,7 @@ public class Square {
 	
 	public static void loadSquareStuffBwahaha(){
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-		System.out.println(input);
+		//System.out.println(input);
 		Mat src = Highgui.imread(input);
 		getSquare(src);
 	}

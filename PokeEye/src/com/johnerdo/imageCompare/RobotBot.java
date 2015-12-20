@@ -18,15 +18,20 @@ public class RobotBot {
 		public void setMousePosition(Point point){
 			this.robot.mouseMove(point.x, point.y);
 		}
+		public void getScreen(){
+			//this.robot.w
+		}
 		
 		public void leftClick(){
 			// LEFT CLICK
             robot.mousePress(InputEvent.BUTTON1_MASK);
             robot.mouseRelease(InputEvent.BUTTON1_MASK);
 		}
+		public static int xScreen = 104;
+		public static int yScreen = 64;
 		public static void Screen(){
 			RobotBot rob = new RobotBot();
-			rob.setMousePosition(new Point(104,64));
+			rob.setMousePosition(new Point(xScreen,yScreen));
 			rob.leftClick();
 		}
 		///104 64 

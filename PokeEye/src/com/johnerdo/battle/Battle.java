@@ -1,5 +1,6 @@
 package com.johnerdo.battle;
 
+import java.awt.Robot;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import org.johnerdo.globalInfo.PokemonList;
 import com.johnerdo.imageCompare.MatchingMethod;
 import com.johnerdo.imageCompare.RobotBot;
 import com.johnerdo.pokemonInfo.Pokemon;
+import com.johnerdo.pokemonInfo.PokemonMethod;
 
 
 public class Battle {
@@ -27,6 +29,7 @@ public class Battle {
 		PokemonList.setMapping();
 		deserializeHash();
 	}
+	
 	public ArrayList<Pokemon> getPokemonOnScreen(boolean pushButton) throws InterruptedException{
 		if(pushButton){
 			RobotBot.Screen();
@@ -43,7 +46,7 @@ public class Battle {
 		}
 		LinkedList<Double> health = MatchingMethod.getHealthBars();
 		for(Double d: health){
-			System.out.println(d);
+			//System.out.println(d);
 		}
 	}
 	public void setUp(){
@@ -58,14 +61,14 @@ public class Battle {
 				continue;
 			}
 			Pokemon pokeValue = null;
-			if(dexNum<720){
+			if(dexNum<719){
 				pokeValue = new Pokemon(dexNum);
 			}else{
-				pokeValue = new Pokemon(PokemonList.pokemonNames[dexNum]);
+				pokeValue = PokemonMethod.getMysticPokemon(dexNum);
 			
 			}
-			System.out.println(pokeValue.toString());
-			System.out.println();
+			//System.out.println(pokeValue.toString());
+			//System.out.println();
 			pokemon.add(pokeValue);
 			pokeHash.put(dexNum, pokeValue);
 		}
@@ -76,17 +79,29 @@ public class Battle {
 	public ArrayList<Pokemon> printPokemon(){
 		Iterator<Pokemon> pokIter = pokemon.iterator();
 		ArrayList<Pokemon> pokemonList = new ArrayList<Pokemon>();
+		
 		while(pokIter.hasNext()){
 			Pokemon pok1 = pokIter.next();
 			pokemonList.add(pok1);
-			//Pokemon pok2 = pokIter.next();
-			System.out.println(PokemonList.printPokemonInfo(pok1));
+			Pokemon pok2 = pokIter.next();
+			pokemonList.add(pok2);
+			if(pok2 == null)
+				System.out.println(PokemonList.printPokemonInfo(pok1));
+			else
+				System.out.println(PokemonList.printPokemonInfo(pok1,pok2));
+		}
+		System.out.println("Possible Mega Pokemon:\n");
+		for(Pokemon pokemon:pokemonList){
+			Pokemon megaPokemon = PokemonMethod.getMegaPokemonFromName(pokemon.getName());
+			if(megaPokemon != null){
+				System.out.println(PokemonList.printPokemonInfo(megaPokemon));
+			}
 		}
 		return pokemonList;
 	}
 	public static void main(String[] args) throws InterruptedException{
 		Battle b = new Battle();
-		b.getPokemonOnScreen(false);
+		b.getPokemonOnScreen(true);
 		//pokeListBwahah(b);
 
 	}
@@ -108,8 +123,8 @@ public class Battle {
 			out.writeObject(Pokemon.pokeDataHash);
 			out.close();
 			fileOut.close();
-			System.out.println(Pokemon.pokeDataHash.size());
-			System.out.println("Serialized data is saved in BWAHAHAHA PokeHash.txt");
+			//System.out.println(Pokemon.pokeDataHash.size());
+			//System.out.println("Serialized data is saved in BWAHAHAHA PokeHash.txt");
 		} catch (IOException i) {
 			i.printStackTrace();
 		}
@@ -126,7 +141,7 @@ public class Battle {
 			i.printStackTrace();
 			return;
 		} catch (ClassNotFoundException c) {
-			System.out.println("Employee class not found");
+			//System.out.println("Employee class not found");
 			c.printStackTrace();
 			return;
 		}

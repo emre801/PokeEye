@@ -53,9 +53,10 @@ public class Pokemon extends ModelClass {
 		try {
 			if(pokeDataHash.containsKey(ID)){
 				data = pokeDataHash.get(ID);
-				System.out.println("Here " + ID);
+				//System.out.println("Here " + ID);
 			}
 			else{
+				
 				data = get("pokemon/"+ID);
 				pokeDataHash.put(ID, data);
 			}
@@ -65,6 +66,7 @@ public class Pokemon extends ModelClass {
 		
 		initializePokemon(data);
 	}
+	
 	
 	/**
 	 * Initializes Pokemon object using said Pokemon's name
@@ -81,7 +83,15 @@ public class Pokemon extends ModelClass {
 		initializePokemon(data);
 		
 	}
-	
+	public Pokemon(String Name,int  HP, int Attack, int Defense, int SpAttack, int SpDefense, int Speed ){
+		this.Name = Name;
+		this.Attack = Attack;
+		this.Defense = Defense;
+		this.HP = HP;
+		this.SpAttack = SpAttack;
+		this.SpDefense = SpDefense;
+		this.Speed = Speed;
+	}
 	//Takes arguments from Constructors and initializes all properties
 	private void initializePokemon(String data){
 		if (data.equals("")){

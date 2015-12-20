@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="lib" path="C:/Users/John/Desktop/PokeJava.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/OpenCV-2.4.6">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="C:/Users/John/Documents/opencv/build/java/x64"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/John/Desktop/PokemonAPI/PokeJava/lib/commons-codec-1.6.jar"/>
 	<classpathentry kind="lib" path="C:/Users/John/Desktop/PokemonAPI/PokeJava/lib/commons-logging-1.1.3.jar"/>
 	<classpathentry kind="lib" path="C:/Users/John/Desktop/PokemonAPI/PokeJava/lib/fluent-hc-4.3.1.jar"/>
@@ -16,5 +10,7 @@
 	<classpathentry kind="lib" path="C:/Users/John/Desktop/PokemonAPI/PokeJava/lib/httpcore-4.3.jar"/>
 	<classpathentry kind="lib" path="C:/Users/John/Desktop/PokemonAPI/PokeJava/lib/httpmime-4.3.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/John/Desktop/PokemonAPI/PokeJava/lib/java-json.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/OpenCV-2.4.6"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
