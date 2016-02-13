@@ -12,6 +12,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import org.johnerdo.globalInfo.PokemonList;
+import org.opencv.core.Core;
+import org.opencv.core.Mat;
+import org.opencv.highgui.Highgui;
 
 import com.johnerdo.imageCompare.MatchingMethod;
 import com.johnerdo.imageCompare.RobotBot;
@@ -85,12 +88,14 @@ public class Battle {
 		while(pokIter.hasNext()){
 			Pokemon pok1 = pokIter.next();
 			pokemonList.add(pok1);
-			Pokemon pok2 = pokIter.next();
-			pokemonList.add(pok2);
-			if(pok2 == null)
+			
+			if(!pokIter.hasNext())
 				System.out.println(PokemonList.printPokemonInfo(pok1));
-			else
+			else{
+				Pokemon pok2 = pokIter.next();
+				pokemonList.add(pok2);
 				System.out.println(PokemonList.printPokemonInfo(pok1,pok2));
+			}
 		}
 		System.out.println("Possible Mega Pokemon:\n");
 		for(Pokemon pokemon:pokemonList){
@@ -103,7 +108,14 @@ public class Battle {
 	}
 	public static void main(String[] args) throws InterruptedException{
 		Battle b = new Battle();
-		if(useCamera)
+		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+		
+		
+		
+		Mat img = Highgui.imread(MatchingMethod.getLatestScreenShot(MatchingMethod.screenInfoScreenShot));
+		
+		img.height();
+		if(!(img.width() ==400 && img.height() == 480))
 			ImageDetection.useCameraDetection();
 		b.getPokemonOnScreen(true);
 		//pokeListBwahah(b);

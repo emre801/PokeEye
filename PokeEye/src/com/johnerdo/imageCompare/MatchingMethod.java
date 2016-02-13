@@ -66,7 +66,7 @@ public class MatchingMethod {
 		Mat screen = Highgui.imread(screenshot);
 		Imgproc.cvtColor(screen, screen, Imgproc.COLOR_BGR2GRAY);
 		Mat slot1 = screen.submat(rect);
-		// //System.out.println(slot1.dump());
+		System.out.println(output);
 		Highgui.imwrite(output, slot1);
 		return slot1;
 	}
@@ -102,7 +102,7 @@ public class MatchingMethod {
 		LinkedList<Mat> results = new LinkedList<Mat>();
 		int x = 5;
 		int y = 5;
-		int box = 25, box2 = 20;
+		int box = 30, box2 = 25;
 		Rect rect1 = new Rect(140 + x, 40 + y, box, box2);
 		// String screenShot = screenInfoScreenShot +"Screenshot.png";
 		String screenShot = getLatestScreenShot(screenInfoScreenShot);
@@ -128,7 +128,7 @@ public class MatchingMethod {
 			for (int i = -1; i < 25; i++) {
 				int x = 47 + (i * 38);
 				int y = 94 + (j * 38);
-				Rect rect = new Rect(x, y, 36, 36);
+				Rect rect = new Rect(x, y, 30, 30);
 				// if(j ==27 && i<=3 && count < 719)
 				// continue;
 				//System.out.println("--");
